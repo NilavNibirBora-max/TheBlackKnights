@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <meta name="" content="">
+ <title>YourTasks</title>
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+ <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+ <script src="https://kit.fontawesome.com/9bf0547f7c.js" crossorigin="anonymous"></script>
+ <style type="text/css" media="all">
+  html,
+  body {
+   margin: 0vw;
+   padding 0vw;
+   height: 100%;
+   width: 100%;
+  }
+
+  .main {
+
+   height: 100%;
+   background-image: url('https://i.ibb.co/bHfxSbK/IMG-20210117-WA0009.jpg');
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
+  }
+
+  #logo {
+   position: sticky;
+   width: 80%;
+   height: 8%;
+   text-align: center;
+   background: #ffb22b;
+   border-radius: 10px;
+   border: 2.5vw double black;
+   font-family: serif;
+   font-size: 10vw;
+  }
+
+  #menu {
+   position: absolute;
+   top: 0vw;
+   right: 0vw;
+   width: 20vw;
+   height: 8%;
+   background: #ffb22b;
+   border-top-right-radius: 10px;
+   border-bottom-right-radius: 10px;
+   border: 2.5vw double black;
+   border-left: 2.5vw double #ffb22b;
+  }
+
+  #icon {
+   font-size: 10vw;
+   position: relative;
+   left: 27%;
+   top: 12%;
+  }
+
+  #input {
+   height: 20%;
+   width: 100%;
+   background: ;
+  }
+
+  #wish {
+   height: 5vh;
+   font-family: 'Caveat', cursive;
+   font-size: 5vh;
+   position: relative;
+   left: 2vw;
+  }
+
+  #textInput {
+   background: #ffb22b;
+   color: black;
+   font-size: 2vh;
+   font-color: black;
+   position: relative;
+   top: 8vh;
+   left: 1vw;
+   height: 20%;
+   width: 70vw;
+   border-radius: 15px;
+   border: 1vw double black;
+  }
+
+  #circle {
+   opacity: 100%;
+   position: relative;
+   left: 75vw;
+   background: #ffb22b;
+   height: 10vh;
+   width: 10vh;
+   border: 1vw dotted black;
+   border-radius: 10vh;
+  }
+
+  #pop {
+   overflow: hidden;
+   position: absolute;
+   top: 0vh;
+   right: 0px;
+   color: white;
+   font-size: 2.5vh;
+   height: 0vh;
+   width: 0vw;
+   transition: 1s;
+   border-radius: 15px;
+   border-top-right-radius: 0px;
+   background: #000000;
+  }
+
+  #closeBtn {
+   position: relative;
+   top: 25vh;
+  }
+
+  #list {
+   position: relative;
+   left: 20px;
+  }
+
+  #display {
+   position: relative;
+   left: 1vw;
+   height: 50vh;
+   border: 20px double black;
+   background: #ffb22b;
+   color: white;
+  }
+
+  #signUp {
+   position: absolute;
+   overflow: hidden;
+   left: 10vw;
+   top: 20vh;
+   width: 0vw;
+   height: 0vh;
+   transition: 1s;
+   background: #000000;
+   color: #ffffff;
+   border: 0px solid #ffffff;
+   border-radius: 10px;
+  }
+
+  #close2 {
+   position: relative;
+   top: 100px;
+   left: 5vw;
+  }
+
+  h2 {
+   position: relative;
+   left: 5vw
+  }
+
+  #unInput {
+   padding: 4px 5px;
+   position: relative;
+   background: #000000;
+   top: 30px;
+   left: 5vw;
+   width: 20vw border-top: 2px solid black;
+   border-bottom: 2px solid #ffffff;
+  }
+
+  #unInput::placeholder {
+   color: #C2C7FF;
+  }
+ </style>
+</head>
+
+<body>
+ <div class="main" id="main">
+  <div id="logo">
+   <b>Task Mate</b>
+  </div>
+  <div id="menu" onclick="popUp()">
+   <i class="fas fa-ellipsis-h" id="icon"></i>
+  </div>
+  <div id="wish"></div>
+  <div id="input">
+   <input type="text" id="textInput" placeholder="What would you like to do today ?">
+   <div id="submit">
+    <div id="circle" onclick="submitTasks()"></div>
+   </div>
+  </div>
+  <div id="display">
+   <ul id="displayList">
+    <li></li>
+   </ul>
+  </div>
+ </div>
+ <div id="pop">
+  <ul id="list">
+   <li onclick="signUp()">Sign-Up</li>
+   <li>Sign-Out</li>
+   <p>
+    Made By NNB <br /> Designed By SJS
+   </p>
+   <br />
+   <p id="closeBtn" onclick="popDown()">
+    <b>X</b>
+   </p>
+  </ul>
+ </div>
+ <div id="signUp">
+  <h2>Sign Up</h2>
+  <input type="text" name="Username" id="unInput" value="" placeholder="Enter Username" />
+  <button id="submitSU" type="submit"></button>
+  <p id="close2" onclick="close2()">X</p>
+ </div>
+ <script>
+  function popUp() {
+
+   document.getElementById('pop').style.width = "60vw";
+   document.getElementById('pop').style.height = "60vh";
+   document.getElementById('main').style.filter = "blur(5px)";
+  }
+
+  function popDown() {
+
+   document.getElementById('pop').style.width = "0vw";
+   document.getElementById('pop').style.height = "0vh";
+   document.getElementById('main').style.filter = "blur(0px)";
+  }
+  var date = new Date();
+  var hour = date.getHours();
+  var wish = ['Good Morning', 'Good Afternoon', 'Good Evening'];
+  if (hour > 0 && hour < 12) {
+   document.getElementById('wish').innerHTML = wish[0] + ' Let\'s Do it Together!';
+  }
+  if (hour > 17 && hour < 24) {
+   document.getElementById('wish').innerHTML = wish[2] + ' <br>Let\'s Do it Together!';
+  }
+
+  //functions
+
+  function signUp() {
+   document.getElementById('signUp').style.width = "80vw";
+   document.getElementById('signUp').style.height = "50vh";
+   document.getElementById('signUp').style.borderWidth = "4px";
+   document.getElementById('pop').style.filter = "blur(5px)";
+   document.getElementById('main').style.filter = "blur(5px)";
+  }
+
+  function close2() {
+
+   document.getElementById('signUp').style.width = "0vw";
+   document.getElementById('signUp').style.height = "0vh";
+   document.getElementById('pop').style.filter = "blur(0px)";
+   document.getElementById('signUp').style.borderWidth = "0px";
+  }
+  function submitTasks(){
+   var task = document.getElementById('textInput').value;
+   var newTask = document.createElement('li');
+   var list = document.getElementById('displayList');
+   list.prepend(newTask);
+   newTask.style.background= 'black';
+   newTask.innerHTML= task;
+  }
+ </script>
+</body>
+
+</html>
