@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>n-n-chat</title>
+  <style>
+    body {
+      background: -webkit-linear-gradient(#000000,#46D22F);
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+    .logo {
+      display: flex;
+      justify-content: center;
+      color: white;
+      padding:;
+    }
+    .typeHere {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding:;
+    }
+    #chatRoom, #userName, #textInput {
+      border-radius: 5px;
+    }
+    #view {
+      height: 250px;
+      overflow-y: auto;
+      display: flex;
+      margin-top: 10px;
+      border-radius: 10px;
+      background: #000000;
+      color: #07BD0C
+
+    }
+    #btn {
+      background:;
+      display: flex;
+      justify-content: center;
+      flex-direction: columns;
+    }
+    .sendB {
+      margin-top: 5px;
+      margin-right: 10px;
+      border-radius: 5px;
+      background: #40ffb6;
+    }
+    .clearB {
+      margin-top: 5px;
+      margin-left: 10px;
+      border-radius: 5px;
+      background: #40ffb6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HTML -->
+
+  <div id="logo" class="logo">
+    <h2>Letter App</h2><h6 style="padding-top:12px">    By Nilav</h6>
+  </div>
+
+  <div id="typeHere" class="typeHere">
+    <input id="chatRoom" type="text" placeholder="Enter Chat Room Name....(Required)">
+    <input id="userName" type="text" placeholder="Username....">
+    <input id="textInput" type="text" placeholder="Message Goes Here....">
+    <div id="btn">
+      <button id="sendB" class="sendB" onClick="sendB()">Send</button>
+      <button id="clearB" class="clearB" onClick="clearB()">Clear Chats</button>
+    </div>
+
+  </div>
+
+  <div id="view">
+    <ul id="chatList">
+      <li>Chats Appear Here....</li>
+    </ul>
+  </div>
+
+  <!-- Firebase Initialisation -->
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyC7kn7sHkafrrw-Yoz16BmV2In620GH9Ug",
+      authDomain: "myproject-a320d.firebaseapp.com",
+      projectId: "myproject-a320d",
+      storageBucket: "myproject-a320d.appspot.com",
+      messagingSenderId: "693759976772",
+      appId: "1:693759976772:web:e63e7dbbc6df0b94f1a311",
+      measurementId: "G-SYQXRWFE3Y"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    //console.log(firebase);
+
+    //End Of Initialisation
+
+    //Main Workings
+
+    var chatId;
+    var userName;
+    var message;
+    var hours;
+    var minutes;
+
+    //Sending Data to Firebase
+
+    function sendB() {
+      delList();
+      chatId = document.getElementById('chatRoom').value;
+
+      userName = document.getElementById('userName').value;
+
+      message = document.getElementById('textInput').value;
+      pushTime();
+      var data = {
+        name: userName,
+        message: message,
+        mHour: hours,
+        mMin: minutes
+      };
+      firebase.database().ref(document.getElementById("chatRoom").value).push(data);
+      clearInput();
+      delList();
+      delList();
+      retrieve();
+    }
+
+    function pushTime() {
+      var time = new Date();
+      hours = time.getHours();
+      minutes = time.getMinutes();
+    }
+
+
+    function delList() {
+      //Deleting Previous List
+      var pList = document.querySelector("ul");
+      var lastElement = pList.lastElementChild;
+      while (lastElement) {
+        pList.removeChild(lastElement);
+        lastElement = pList.lastElementChild;
+      }
+    }
+
+    function retrieve() {
+      delList();
+      firebase.database().ref(document.getElementById("chatRoom").value).on("value", gotData, errData);
+
+      function gotData(data) {
+        var chats = data.val();
+        var keys = Object.keys(chats);
+        delList();
+        for (var element of keys) {
+          var name = chats[element].name;
+          var message = chats[element].message;
+          var mH = chats[element].mHour;
+          var mM = chats[element].mMin;
+
+
+          var newM = document.createElement("li");
+          var mList = document.getElementById("chatList");
+          mList.prepend(newM);
+          document.getElementsByTagName("li")[0].innerHTML = String(mH) + ':' + String(mM) + ' - ' + name + ' : ' + message;
+
+        }
+      }
+
+      function errData(err) {
+        console.log("Error");
+        console.log(err);
+      }
+
+    }
+    function clearB() {
+      firebase.database().ref(document.getElementById("chatRoom").value).remove();
+      delList();
+      var newList2 = document.createElement("li");
+      var List2 = document.getElementById("chatList");
+      List2.prepend(newList2);
+      document.getElementsByTagName("li")[0].innerHTML = "Chats Successfully Cleared From Server!";
+
+    }
+    function clearInput() {
+    				while(document.getElementById('textInput').value){
+    								document.getElementById('textInput').value= "";
+    				}
+      
+    }
+
+
+
+  </script>
+</body>
+</html>
